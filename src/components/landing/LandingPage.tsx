@@ -62,13 +62,22 @@ export default function LandingPage() {
         ref={containerRef}
         className="h-full overflow-y-auto snap-y snap-mandatory"
       >
-        {sections.map((section, index) => (
-          <Section
-            key={section.id}
-            {...section}
-            isActive={index === activeSection}
-          />
-        ))}
+        {sections.map((section, index) => {
+          const playIndex = sections.findIndex(s => s.id === 'play')
+          const handleButtonClick = (section.id === 'hero' || section.id === 'features')
+            ? () => handleNavClick(playIndex)
+            : section.id === 'join'
+            ? () => handleNavClick(0)
+            : undefined
+          return (
+            <Section
+              key={section.id}
+              {...section}
+              isActive={index === activeSection}
+              onButtonClick={handleButtonClick}
+            />
+          )
+        })}
       </div>
     </Layout>
   )
